@@ -1,0 +1,5 @@
+# Local datasets
+/Data/*
+!/Data/README.md
+
+__pycache__
