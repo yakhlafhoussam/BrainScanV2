@@ -1,0 +1,42 @@
+{
+  "architecture": "GoogLeNet_InceptionV1",
+  "input_shape": [
+    224,
+    224,
+    3
+  ],
+  "num_classes": 4,
+  "classes": [
+    "glioma",
+    "meningioma",
+    "notumor",
+    "pituitary"
+  ],
+  "class_mapping": {
+    "0": "glioma",
+    "1": "meningioma",
+    "2": "notumor",
+    "3": "pituitary"
+  },
+  "training_parameters": {
+    "batch_size": 32,
+    "epochs": 35,
+    "learning_rate": 0.0001,
+    "dropout_rate": 0.4,
+    "random_state": 42
+  },
+  "test_performance": {
+    "test_loss": 0.03470870479941368,
+    "test_accuracy": 0.985892117023468,
+    "tumor_sensitivity": 0.9966517857142857,
+    "tumor_specificity": 0.9967637540453075
+  },
+  "artifacts": {
+    "best_model": "googlenet_brain_tumor_best.keras",
+    "final_model": "googlenet_brain_tumor_final.keras",
+    "class_mapping": "class_mapping.json",
+    "confusion_matrix": "confusion_matrix.png",
+    "learning_curves": "learning_curves.png",
+    "evaluation_results": "evaluation_results.json"
+  }
+}

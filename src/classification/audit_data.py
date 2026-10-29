@@ -1,14 +1,15 @@
 import cv2
 import random
 import matplotlib.pyplot as plt
+import hashlib
+
+from PIL import Image
 
 from collections import Counter
 from pathlib import Path
 
-from src.config.log import infoMsg, warningMsg, successMsg
-
 PROJECT_DIR = Path(__file__).resolve().parents[2]
-DATA_DIR = PROJECT_DIR / "Data"
+DATA_DIR = PROJECT_DIR / "Data" / "origine"
 
 IMAGE_SIZE = (224, 224)
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp"}
@@ -37,6 +38,30 @@ def exploration():
 
 def get_class_dirs(CPATH: Path):
     return sorted(folder for folder in CPATH.iterdir() if folder.is_dir())
+
+
+def get_duplicate_images(classification_dir: Path = None):
+    """Return groups of classification images with identical file contents."""
+    if classification_dir is None:
+        classification_dir = (
+            DATA_DIR / "classification"
+            if (DATA_DIR / "classification").is_dir()
+            else DATA_DIR
+        )
+    image_hashes = {}
+
+    if not classification_dir.is_dir():
+        return {}
+
+    for class_dir in get_class_dirs(classification_dir):
+        for image_path in sorted(class_dir.iterdir()):
+            if not image_path.is_file() or image_path.suffix.lower() not in VALID_EXTENSIONS:
+                continue
+
+            digest = hashlib.sha256(image_path.read_bytes()).hexdigest()
+            image_hashes.setdefault(digest, []).append(image_path)
+
+    return {digest: paths for digest, paths in image_hashes.items() if len(paths) > 1}
 
 
 def print_class_summary(class_dirs):
@@ -101,9 +126,7 @@ def print_image_issues(class_dirs):
 def display_sample_images(class_dirs):
     random.seed(RANDOM_STATE)
     num_samples = 3
-    _, axes = plt.subplots(
-        nrows=len(class_dirs), ncols=num_samples, figsize=(12, 12)
-    )
+    _, axes = plt.subplots(nrows=len(class_dirs), ncols=num_samples, figsize=(12, 12))
 
     for row, folder in enumerate(class_dirs):
         image_paths = [
@@ -111,7 +134,9 @@ def display_sample_images(class_dirs):
             for file in folder.iterdir()
             if file.is_file() and file.suffix.lower() in VALID_EXTENSIONS
         ]
-        selected_paths = random.sample(image_paths, k=min(num_samples, len(image_paths)))
+        selected_paths = random.sample(
+            image_paths, k=min(num_samples, len(image_paths))
+        )
 
         for col, image_path in enumerate(selected_paths):
             image = cv2.imread(str(image_path))
@@ -178,6 +203,3 @@ def plot_aspect_ratios(image_shapes):
 
     print("Minimum aspect ratio:", round(min(aspect_ratios), 3))
     print("Maximum aspect ratio:", round(max(aspect_ratios), 3))
-
-def detec_exploration(DPATH: Path):
-    pass

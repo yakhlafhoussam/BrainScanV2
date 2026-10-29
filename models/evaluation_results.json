@@ -1,0 +1,86 @@
+{
+  "test_loss": 0.03470520302653313,
+  "test_accuracy": 0.985892117023468,
+  "classification_report": {
+    "glioma": {
+      "precision": 0.9898305084745763,
+      "recall": 0.9765886287625418,
+      "f1-score": 0.9831649831649831,
+      "support": 299.0
+    },
+    "meningioma": {
+      "precision": 0.9703947368421053,
+      "recall": 0.9768211920529801,
+      "f1-score": 0.9735973597359736,
+      "support": 302.0
+    },
+    "notumor": {
+      "precision": 0.9903536977491961,
+      "recall": 0.9967637540453075,
+      "f1-score": 0.9935483870967742,
+      "support": 309.0
+    },
+    "pituitary": {
+      "precision": 0.9932203389830508,
+      "recall": 0.9932203389830508,
+      "f1-score": 0.9932203389830508,
+      "support": 295.0
+    },
+    "accuracy": 0.9858921161825727,
+    "macro avg": {
+      "precision": 0.9859498205122321,
+      "recall": 0.9858484784609701,
+      "f1-score": 0.9858827672451955,
+      "support": 1205.0
+    },
+    "weighted avg": {
+      "precision": 0.98592350636076,
+      "recall": 0.9858921161825727,
+      "f1-score": 0.9858914391863047,
+      "support": 1205.0
+    }
+  },
+  "confusion_matrix": [
+    [
+      292,
+      7,
+      0,
+      0
+    ],
+    [
+      2,
+      295,
+      3,
+      2
+    ],
+    [
+      0,
+      1,
+      308,
+      0
+    ],
+    [
+      1,
+      1,
+      0,
+      293
+    ]
+  ],
+  "clinical_safety": {
+    "total_test_cases": 1205,
+    "total_tumor_cases": 896,
+    "total_healthy_cases": 309,
+    "true_positives": 893,
+    "false_negatives": 3,
+    "false_positives": 1,
+    "true_negatives": 308,
+    "tumor_sensitivity": 0.9966517857142857,
+    "tumor_specificity": 0.9967637540453075
+  },
+  "class_names": [
+    "glioma",
+    "meningioma",
+    "notumor",
+    "pituitary"
+  ]
+}
